@@ -1,2 +1,17 @@
 {
+  "apiKey": {
+    "text": "API Key",
+    "type": "textbox",
+    "value": "openweathermap.org key"
+  },
+  "latitude": {
+    "text": "Latitude",
+    "type": "textbox",
+    "value": "0"
+  },
+  "longitude": {
+    "text": "Longitude",
+    "type": "textbox",
+    "value": "0"
+  }
 }
