@@ -18,5 +18,10 @@
     "text": "Click to refresh weather",
     "type": "button",
     "value": "Refresh"
+  },
+  "weatherToggle": {
+    "text": "Weather based background",
+    "type": "checkbox",
+    "value": true
   }
 }

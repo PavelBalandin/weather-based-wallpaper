@@ -66,9 +66,11 @@ function updateBackground() {
 function setBackground(url) {
     if (isVideoFile(url)) {
         setVideoBackground(url)
+        video.style.display = 'block'
     } else {
-        video.pause();
         setImageBackground(url)
+        video.pause();
+        video.style.display = 'none'
     }
 }
 
@@ -82,10 +84,17 @@ function setVideoBackground(url) {
         video.load();
         video.play();
     }
+    if (video.paused) {
+        video.play();
+    }
 }
 
 async function updateWeather() {
-    currentWeather = await getWeather(latitude, longitude, apiKey)
+    if (weatherToggle) {
+        currentWeather = await getWeather(latitude, longitude, apiKey)
+    } else {
+        currentWeather = null
+    }
 }
 
 async function getWeather(lat, lon, apiKey) {
@@ -124,4 +133,8 @@ function showError(message) {
 function cleanError() {
     const logElement = document.getElementById('errors');
     logElement.innerHTML = ''
+}
+
+function updateBackgroundState() {
+    updateWeather().then(updateBackground)
 }
