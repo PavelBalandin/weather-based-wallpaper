@@ -1,11 +1,5 @@
-// Settings
-let latitude = 0
-let longitude = 0
-let apiKey = ''
-
 let body = document.querySelector('body');
 let video = document.getElementById('vid');
-
 let currentWeather = null
 
 let timeFrames = [
@@ -48,7 +42,7 @@ let timeFrames = [
         }
     },
     {
-        time: 'night', start: 22, end: 24, image: {
+        time: 'night', start: 21, end: 24, image: {
             default: './images/night.jpg',
             Thunderstorm: './video/night_rain.mp4',
             Rain: './video/night_rain.mp4'
@@ -97,6 +91,11 @@ async function updateWeather() {
 async function getWeather(lat, lon, apiKey) {
     let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
     let response = await fetch(url);
+    if (response.status !== 200) {
+        showError("There was an error while fetching the weather data. Please verify the weather API information")
+        return;
+    }
+    cleanError();
     return await response.json();
 }
 
@@ -104,22 +103,25 @@ function isVideoFile(filePath) {
     return filePath.toLowerCase().endsWith('.mp4');
 }
 
-function livelyPropertyListener(name, val) {
-    switch (name) {
-        case "apiKey":
-            apiKey = val;
-            break;
-        case "latitude":
-            latitude = val;
-            break;
-        case "longitude":
-            longitude = val;
-            break;
-    }
-}
-
 function logToPage(message) {
     const p = document.createElement('p');
     p.textContent = message;
     document.getElementById('logs').appendChild(p);
+}
+
+function showError(message) {
+    const logElement = document.getElementById('errors');
+
+    if (logElement.firstChild) {
+        logElement.firstChild.textContent = message;
+    } else {
+        const p = document.createElement('span');
+        p.textContent = message;
+        logElement.appendChild(p);
+    }
+}
+
+function cleanError() {
+    const logElement = document.getElementById('errors');
+    logElement.innerHTML = ''
 }

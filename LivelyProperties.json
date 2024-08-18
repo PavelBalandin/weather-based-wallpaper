@@ -2,16 +2,21 @@
   "apiKey": {
     "text": "API Key",
     "type": "textbox",
-    "value": "openweathermap.org key"
+    "value": null
   },
   "latitude": {
     "text": "Latitude",
     "type": "textbox",
-    "value": "0"
+    "value": null
   },
   "longitude": {
     "text": "Longitude",
     "type": "textbox",
-    "value": "0"
+    "value": null
+  },
+  "btnRefreshWeather": {
+    "text": "Click to refresh weather",
+    "type": "button",
+    "value": "Refresh"
   }
 }
