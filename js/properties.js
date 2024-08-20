@@ -19,7 +19,7 @@ function livelyPropertyListener(name, val) {
             longitude = val;
             break;
         case "btnRefreshWeather":
-            updateWeather();
+            updateBackgroundState();
             break;
         case "morningBackgroundSelect":
             updateTimeFrames('morning', 'default', assemblePath(val));
