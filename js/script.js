@@ -8,9 +8,9 @@ let timeFrames = [
         start: 0,
         end: 6,
         image: {
-            default: './images/darkness.jpg',
-            Thunderstorm: './video/darkness_rain.mp4',
-            Rain: './video/darkness_rain.mp4'
+            default: './media/darkness.jpg',
+            thunderstorm: './media/darkness_rain.mp4',
+            rain: './media/darkness_rain.mp4'
         }
     },
     {
@@ -18,9 +18,9 @@ let timeFrames = [
         start: 6,
         end: 10,
         image: {
-            default: './images/morning.jpg',
-            Thunderstorm: './video/morning_rain.mp4',
-            Rain: './video/morning_rain.mp4'
+            default: './media/morning.jpg',
+            thunderstorm: './media/morning_rain.mp4',
+            rain: './media/morning_rain.mp4'
         }
     },
     {
@@ -28,29 +28,29 @@ let timeFrames = [
         start: 11,
         end: 18,
         image: {
-            default: './images/day.jpg',
-            Thunderstorm: './video/day_rain.mp4',
-            Rain: './video/day_rain.mp4'
+            default: './media/day.jpg',
+            thunderstorm: './media/day_rain.mp4',
+            rain: './media/day_rain.mp4'
         }
     },
     {
         time: 'evening', start: 18, end: 21,
         image: {
-            default: './images/evening.jpg',
-            Thunderstorm: './video/evening_rain.mp4',
-            Rain: './video/evening_rain.mp4'
+            default: './media/evening.jpg',
+            thunderstorm: './media/evening_rain.mp4',
+            rain: './media/evening_rain.mp4'
         }
     },
     {
         time: 'night', start: 21, end: 24, image: {
-            default: './images/night.jpg',
-            Thunderstorm: './video/night_rain.mp4',
-            Rain: './video/night_rain.mp4'
+            default: './media/night.jpg',
+            thunderstorm: './media/night_rain.mp4',
+            rain: './media/night_rain.mp4'
         }
     }
 ];
 
-updateWeather().then(r => updateBackground());
+updateBackgroundState();
 
 setInterval(updateBackground, 10 * 1000);
 setInterval(updateWeather, 10 * 60 * 1000);
@@ -137,4 +137,9 @@ function cleanError() {
 
 function updateBackgroundState() {
     updateWeather().then(updateBackground)
+}
+
+function updateTimeFrames(time, weather, backgroundPath) {
+    let timeFrame = timeFrames.find(frame => frame.time === time);
+    timeFrame.image[weather] = backgroundPath;
 }

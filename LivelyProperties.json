@@ -23,5 +23,75 @@
     "text": "Weather based background",
     "type": "checkbox",
     "value": true
+  },
+  "morningBackgroundSelect": {
+    "type": "folderDropdown",
+    "value": "morning.jpg",
+    "text": "Morning background",
+    "filter": "*.jpg|*.jpeg|*.png|*.mp4",
+    "folder": "media"
+  },
+  "dayBackgroundSelect": {
+    "type": "folderDropdown",
+    "value": "day.jpg",
+    "text": "Day background",
+    "filter": "*.jpg|*.jpeg|*.png|*.mp4",
+    "folder": "media"
+  },
+  "eveningBackgroundSelect": {
+    "type": "folderDropdown",
+    "value": "evening.jpg",
+    "text": "Evening background",
+    "filter": "*.jpg|*.jpeg|*.png|*.mp4",
+    "folder": "media"
+  },
+  "nightBackgroundSelect": {
+    "type": "folderDropdown",
+    "value": "night.jpg",
+    "text": "Night background",
+    "filter": "*.jpg|*.jpeg|*.png|*.mp4",
+    "folder": "media"
+  },
+  "darknessBackgroundSelect": {
+    "type": "folderDropdown",
+    "value": "darkness.jpg",
+    "text": "Darkness background",
+    "filter": "*.jpg|*.jpeg|*.png|*.mp4",
+    "folder": "media"
+  },
+  "morningRainBackgroundSelect": {
+    "type": "folderDropdown",
+    "value": "morning_rain.mp4",
+    "text": "Morning rain background",
+    "filter": "*.jpg|*.jpeg|*.png|*.mp4",
+    "folder": "media"
+  },
+  "dayRainBackgroundSelect": {
+    "type": "folderDropdown",
+    "value": "day_rain.mp4",
+    "text": "Day rain background",
+    "filter": "*.jpg|*.jpeg|*.png|*.mp4",
+    "folder": "media"
+  },
+  "eveningRainBackgroundSelect": {
+    "type": "folderDropdown",
+    "value": "evening_rain.mp4",
+    "text": "Evening rain background",
+    "filter": "*.jpg|*.jpeg|*.png|*.mp4",
+    "folder": "media"
+  },
+  "nightRainBackgroundSelect": {
+    "type": "folderDropdown",
+    "value": "night_rain.mp4",
+    "text": "Night rain background",
+    "filter": "*.jpg|*.jpeg|*.png|*.mp4",
+    "folder": "media"
+  },
+  "darknessRainBackgroundSelect": {
+    "type": "folderDropdown",
+    "value": "darkness_rain.mp4",
+    "text": "Darkness rain background",
+    "filter": "*.jpg|*.jpeg|*.png|*.mp4",
+    "folder": "media"
   }
 }
