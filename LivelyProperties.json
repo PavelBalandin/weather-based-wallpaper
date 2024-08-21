@@ -1,4 +1,14 @@
 {
+  "weatherToggle": {
+    "text": "Weather based background",
+    "type": "checkbox",
+    "value": true
+  },
+  "enableRainToggle": {
+    "text": "Enable rain by default",
+    "type": "checkbox",
+    "value": false
+  },
   "apiKey": {
     "text": "API Key",
     "type": "textbox",
@@ -18,11 +28,6 @@
     "text": "Click to refresh weather",
     "type": "button",
     "value": "Refresh"
-  },
-  "weatherToggle": {
-    "text": "Weather based background",
-    "type": "checkbox",
-    "value": true
   },
   "morningBackgroundSelect": {
     "type": "folderDropdown",

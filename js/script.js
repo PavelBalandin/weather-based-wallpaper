@@ -55,10 +55,17 @@ updateBackgroundState();
 setInterval(updateBackground, 10 * 1000);
 setInterval(updateWeather, 10 * 60 * 1000);
 
+function getCondition() {
+    if (rainToggle === true) {
+        return 'rain'
+    }
+    return currentWeather?.weather[0]?.main;
+}
+
 function updateBackground() {
     let hours = new Date().getHours();
     let frame = timeFrames.find(frame => hours >= frame.start && hours < frame.end);
-    let condition = currentWeather?.weather[0]?.main;
+    let condition = getCondition();
     let background = frame.image[condition] ?? frame.image.default;
     setBackground(background);
 }

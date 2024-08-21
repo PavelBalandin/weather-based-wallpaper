@@ -2,6 +2,7 @@ let latitude = null
 let longitude = null
 let apiKey = null
 let weatherToggle = true
+let rainToggle = false
 
 function livelyPropertyListener(name, val) {
     switch (name) {
@@ -19,6 +20,13 @@ function livelyPropertyListener(name, val) {
             longitude = val;
             break;
         case "btnRefreshWeather":
+            updateBackgroundState();
+            break;
+        case "enableRainToggle":
+            rainToggle = val;
+            if (rainToggle === true) {
+                cleanError()
+            }
             updateBackgroundState();
             break;
         case "morningBackgroundSelect":
