@@ -25,7 +25,7 @@ let timeFrames = [
     },
     {
         time: 'day',
-        start: 11,
+        start: 10,
         end: 18,
         image: {
             default: './media/day.jpg',
