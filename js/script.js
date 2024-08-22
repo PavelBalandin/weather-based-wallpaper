@@ -5,7 +5,7 @@ let weatherData = null;
 
 updateBackgroundState();
 setInterval(updateBackground, 10 * 1000);
-setInterval(fetchAndUpdateWeather, 1000);
+setInterval(fetchAndUpdateWeather, 10 * 60 * 1000);
 
 async function updateBackgroundState() {
     await fetchAndUpdateWeather();
@@ -73,8 +73,8 @@ async function fetchWeather(lat, lon, apiKey) {
 }
 
 function extractWeather(weather) {
-    if (rainToggle === true) {
-        return 'rain'
+    if (defaultWeather !== 'none') {
+        return defaultWeather
     }
     return weather?.weather[0]?.main;
 }

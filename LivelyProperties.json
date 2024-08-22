@@ -4,10 +4,15 @@
     "type": "checkbox",
     "value": true
   },
-  "enableRainToggle": {
-    "text": "Enable rain by default",
-    "type": "checkbox",
-    "value": false
+  "defaultWeather": {
+    "type": "dropdown",
+    "value": 0,
+    "text": "Set default weather",
+    "items": [
+      "none",
+      "clear",
+      "rain"
+    ]
   },
   "apiKey": {
     "text": "API Key",
