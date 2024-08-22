@@ -1,118 +1,82 @@
-let body = document.querySelector('body');
-let video = document.getElementById('vid');
-let currentWeather = null
+const body = document.querySelector('body');
+const video = document.getElementById('vid');
 
-let timeFrames = [
-    {
-        time: 'darkness',
-        start: 0,
-        end: 6,
-        image: {
-            default: './media/darkness.jpg',
-            thunderstorm: './media/darkness_rain.mp4',
-            rain: './media/darkness_rain.mp4'
-        }
-    },
-    {
-        time: 'morning',
-        start: 6,
-        end: 10,
-        image: {
-            default: './media/morning.jpg',
-            thunderstorm: './media/morning_rain.mp4',
-            rain: './media/morning_rain.mp4'
-        }
-    },
-    {
-        time: 'day',
-        start: 10,
-        end: 18,
-        image: {
-            default: './media/day.jpg',
-            thunderstorm: './media/day_rain.mp4',
-            rain: './media/day_rain.mp4'
-        }
-    },
-    {
-        time: 'evening', start: 18, end: 21,
-        image: {
-            default: './media/evening.jpg',
-            thunderstorm: './media/evening_rain.mp4',
-            rain: './media/evening_rain.mp4'
-        }
-    },
-    {
-        time: 'night', start: 21, end: 24, image: {
-            default: './media/night.jpg',
-            thunderstorm: './media/night_rain.mp4',
-            rain: './media/night_rain.mp4'
-        }
-    }
-];
+let weatherData = null;
 
 updateBackgroundState();
-
 setInterval(updateBackground, 10 * 1000);
-setInterval(updateWeather, 10 * 60 * 1000);
+setInterval(fetchAndUpdateWeather, 1000);
 
-function getCondition() {
-    if (rainToggle === true) {
-        return 'rain'
+async function updateBackgroundState() {
+    await fetchAndUpdateWeather();
+    updateBackground();
+}
+
+function updateTimeFrames(time, condition, backgroundPath) {
+    const timeFrame = timeFrames.find(frame => frame.time === time);
+    if (timeFrame) {
+        timeFrame.image[condition] = backgroundPath;
     }
-    return currentWeather?.weather[0]?.main;
 }
 
 function updateBackground() {
-    let hours = new Date().getHours();
-    let frame = timeFrames.find(frame => hours >= frame.start && hours < frame.end);
-    let condition = getCondition();
-    let background = frame.image[condition] ?? frame.image.default;
+    const currentHour = new Date().getHours();
+    const frame = timeFrames.find(frame => currentHour >= frame.start && currentHour < frame.end);
+    const condition = extractWeather(weatherData);
+    const background = frame?.image[condition] || frame?.image.default;
+
     setBackground(background);
 }
 
 function setBackground(url) {
     if (isVideoFile(url)) {
-        setVideoBackground(url)
-        video.style.display = 'block'
+        setVideoBackground(url);
+        video.style.display = 'block';
     } else {
-        setImageBackground(url)
-        video.pause();
-        video.style.display = 'none'
+        setImageBackground(url);
+        video.style.display = 'none';
     }
 }
 
 function setImageBackground(url) {
     body.style.backgroundImage = `url(${url})`;
+    video.pause();
 }
 
 function setVideoBackground(url) {
     if (!video.src.includes(url.substring(1))) {
         video.src = url;
         video.load();
-        video.play();
     }
     if (video.paused) {
         video.play();
     }
 }
 
-async function updateWeather() {
+async function fetchAndUpdateWeather() {
     if (weatherToggle) {
-        currentWeather = await getWeather(latitude, longitude, apiKey)
+        weatherData = await fetchWeather(latitude, longitude, apiKey);
     } else {
-        currentWeather = null
+        weatherData = null;
     }
 }
 
-async function getWeather(lat, lon, apiKey) {
+async function fetchWeather(lat, lon, apiKey) {
     let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
     let response = await fetch(url);
-    if (response.status !== 200) {
-        showError("There was an error while fetching the weather data. Please verify the weather API information")
-        return;
+    if (response.status === 200) {
+        clearError();
+        return await response.json();
+    } else {
+        displayError("There was an error while fetching the weather data. Please verify the weather API information")
     }
-    cleanError();
-    return await response.json();
+}
+
+function extractWeather(weather) {
+    if (rainToggle === true) {
+        return 'rain'
+    }
+    return weather?.weather[0]?.main;
 }
 
 function isVideoFile(filePath) {
@@ -120,33 +84,20 @@ function isVideoFile(filePath) {
 }
 
 function logToPage(message) {
-    const p = document.createElement('p');
-    p.textContent = message;
-    document.getElementById('logs').appendChild(p);
+    const logElement = document.getElementById('logs');
+    const logMessage = document.createElement('p');
+    logMessage.textContent = message;
+    logElement.appendChild(logMessage);
 }
 
-function showError(message) {
-    const logElement = document.getElementById('errors');
-
-    if (logElement.firstChild) {
-        logElement.firstChild.textContent = message;
-    } else {
-        const p = document.createElement('span');
-        p.textContent = message;
-        logElement.appendChild(p);
-    }
+function displayError(message) {
+    const errorElement = document.querySelector('#errors>span');
+    errorElement.textContent = message;
+    errorElement.style.display = 'inline-block';
 }
 
-function cleanError() {
-    const logElement = document.getElementById('errors');
-    logElement.innerHTML = ''
-}
-
-function updateBackgroundState() {
-    updateWeather().then(updateBackground)
-}
-
-function updateTimeFrames(time, weather, backgroundPath) {
-    let timeFrame = timeFrames.find(frame => frame.time === time);
-    timeFrame.image[weather] = backgroundPath;
+function clearError() {
+    const errorElement = document.querySelector('#errors>span');
+    errorElement.textContent = '';
+    errorElement.style.display = 'none';
 }

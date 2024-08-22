@@ -25,7 +25,7 @@ function livelyPropertyListener(name, val) {
         case "enableRainToggle":
             rainToggle = val;
             if (rainToggle === true) {
-                cleanError()
+                clearError()
             }
             updateBackgroundState();
             break;
